@@ -1,5 +1,17 @@
 {
-  "current": "Default",
+  "current": {
+    "color_navy": "#0a1f44",
+    "color_navy_dark": "#061530",
+    "color_cta": "#1a9c52",
+    "color_cta_dark": "#137d41",
+    "color_text": "#1c1c1c",
+    "color_muted": "#6b7280",
+    "color_border": "#e5e7eb",
+    "color_bg": "#ffffff",
+    "type_heading_font": "assistant_n4",
+    "type_body_font": "assistant_n4",
+    "container_width": 1280
+  },
   "presets": {
     "Default": {
       "color_navy": "#0a1f44",

@@ -33,12 +33,16 @@
         --color-border: {{ settings.color_border | default: '#e5e7eb' }};
         --color-bg: {{ settings.color_bg | default: '#ffffff' }};
         --container-width: {{ settings.container_width | default: 1280 }}px;
-        --font-body: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
-        --font-heading: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+        --font-body: {{ settings.type_body_font.family | default: 'Assistant' }}, {{ settings.type_body_font.fallback_families | default: 'sans-serif' }};
+        --font-heading: {{ settings.type_heading_font.family | default: 'Assistant' }}, {{ settings.type_heading_font.fallback_families | default: 'sans-serif' }};
       }
     </style>
-    {{ settings.type_body_font | font_face: font_display: 'swap' }}
-    {{ settings.type_heading_font | font_face: font_display: 'swap' }}
+    {%- if settings.type_body_font -%}
+      {{ settings.type_body_font | font_face: font_display: 'swap' }}
+    {%- endif -%}
+    {%- if settings.type_heading_font and settings.type_heading_font != settings.type_body_font -%}
+      {{ settings.type_heading_font | font_face: font_display: 'swap' }}
+    {%- endif -%}
 
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
   </head>

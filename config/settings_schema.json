@@ -27,13 +27,6 @@
     ]
   },
   {
-    "name": "Typografie",
-    "settings": [
-      { "type": "font_picker", "id": "type_heading_font", "label": "Koppen", "default": "assistant_n4" },
-      { "type": "font_picker", "id": "type_body_font", "label": "Tekst", "default": "assistant_n4" }
-    ]
-  },
-  {
     "name": "Layout",
     "settings": [
       { "type": "range", "id": "container_width", "label": "Max containerbreedte (px)", "min": 1080, "max": 1440, "step": 20, "default": 1280 }

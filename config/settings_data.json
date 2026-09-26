@@ -8,8 +8,6 @@
     "color_muted": "#6b7280",
     "color_border": "#e5e7eb",
     "color_bg": "#ffffff",
-    "type_heading_font": "assistant_n4",
-    "type_body_font": "assistant_n4",
     "container_width": 1280
   },
   "presets": {
@@ -22,8 +20,6 @@
       "color_muted": "#6b7280",
       "color_border": "#e5e7eb",
       "color_bg": "#ffffff",
-      "type_heading_font": "assistant_n4",
-      "type_body_font": "assistant_n4",
       "container_width": 1280
     }
   }

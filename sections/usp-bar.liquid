@@ -1,0 +1,47 @@
+<section class="usp-bar">
+  <div class="container usp-bar__grid">
+    {%- for block in section.blocks -%}
+      <div class="usp-bar__item">
+        {% render 'icon', name: block.settings.icon %}
+        <span>{{ block.settings.text }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "USP-balk",
+  "blocks": [
+    {
+      "type": "usp",
+      "name": "USP",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icoon",
+          "options": [
+            { "value": "check", "label": "Vinkje" },
+            { "value": "shield", "label": "Schild" },
+            { "value": "camera", "label": "Camera" },
+            { "value": "repeat", "label": "Inruilen" },
+            { "value": "truck", "label": "Verzending" }
+          ],
+          "default": "check"
+        },
+        { "type": "text", "id": "text", "label": "Tekst", "default": "Originele toestellen" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "usp", "settings": { "icon": "check", "text": "Originele toestellen" } },
+      { "type": "usp", "settings": { "icon": "shield", "text": "Scherpe prijs-kwaliteit" } },
+      { "type": "usp", "settings": { "icon": "camera", "text": "Echte foto's van ieder toestel" } },
+      { "type": "usp", "settings": { "icon": "repeat", "text": "Inruilen mogelijk" } }
+    ]
+  },
+  "presets": [{ "name": "USP-balk" }]
+}
+{% endschema %}

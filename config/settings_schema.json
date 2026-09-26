@@ -1,0 +1,50 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Shopifyphone",
+    "theme_version": "1.0.0",
+    "theme_author": "Custom",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "Logo & branding",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo" }
+    ]
+  },
+  {
+    "name": "Kleuren",
+    "settings": [
+      { "type": "color", "id": "color_navy", "label": "Navy (primair)", "default": "#0a1f44" },
+      { "type": "color", "id": "color_navy_dark", "label": "Navy (donker)", "default": "#061530" },
+      { "type": "color", "id": "color_cta", "label": "CTA groen", "default": "#1a9c52" },
+      { "type": "color", "id": "color_cta_dark", "label": "CTA groen (hover)", "default": "#137d41" },
+      { "type": "color", "id": "color_text", "label": "Tekst", "default": "#1c1c1c" },
+      { "type": "color", "id": "color_muted", "label": "Tekst (gedempt)", "default": "#6b7280" },
+      { "type": "color", "id": "color_border", "label": "Randen", "default": "#e5e7eb" },
+      { "type": "color", "id": "color_bg", "label": "Achtergrond", "default": "#ffffff" }
+    ]
+  },
+  {
+    "name": "Typografie",
+    "settings": [
+      { "type": "font_picker", "id": "type_heading_font", "label": "Koppen", "default": "assistant_n4" },
+      { "type": "font_picker", "id": "type_body_font", "label": "Tekst", "default": "assistant_n4" }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      { "type": "range", "id": "container_width", "label": "Max containerbreedte (px)", "min": 1080, "max": 1440, "step": 20, "default": 1280 }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_facebook", "label": "Facebook" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" }
+    ]
+  }
+]

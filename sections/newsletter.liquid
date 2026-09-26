@@ -1,0 +1,29 @@
+<section class="newsletter">
+  <div class="container newsletter__inner">
+    <div>
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+
+    {% form 'customer', class: 'newsletter__form' %}
+      {%- if form.posted_successfully? -%}
+        <p class="newsletter__success">{{ 'newsletter.success' | t: default: 'Bedankt voor je inschrijving!' }}</p>
+      {%- else -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input type="email" name="contact[email]" placeholder="jouw@email.nl" required aria-label="E-mailadres">
+        <button type="submit" class="btn btn--cta">{{ section.settings.button_label }}</button>
+      {%- endif -%}
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Nieuwsbrief",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titel", "default": "Blijf op de hoogte" },
+    { "type": "text", "id": "text", "label": "Tekst", "default": "Nieuwe voorraad en scherpe deals, direct in je inbox." },
+    { "type": "text", "id": "button_label", "label": "Knoptekst", "default": "Inschrijven" }
+  ]
+}
+{% endschema %}

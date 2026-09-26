@@ -1,0 +1,20 @@
+<section class="main-page">
+  <div class="container">
+    <h1>Order {{ order.name }}</h1>
+    <p>Besteld op {{ order.created_at | date: '%d-%m-%Y' }} — status: {{ order.financial_status_label }}</p>
+    <table class="cart-table">
+      <thead><tr><th>Product</th><th>Aantal</th><th>Prijs</th></tr></thead>
+      <tbody>
+      {%- for line_item in order.line_items -%}
+        <tr>
+          <td>{{ line_item.title }}</td>
+          <td>{{ line_item.quantity }}</td>
+          <td>{{ line_item.final_price | money }}</td>
+        </tr>
+      {%- endfor -%}
+      </tbody>
+    </table>
+    <p><strong>Totaal: {{ order.total_price | money }}</strong></p>
+    <a href="{{ routes.account_url }}" class="link">Terug naar account</a>
+  </div>
+</section>

@@ -1,0 +1,14 @@
+<section class="main-page">
+  <div class="container">
+    <h1>Adressen</h1>
+    {%- for address in customer.addresses -%}
+      <div class="address-card">
+        {{ address | format_address }}
+        {%- form 'customer_address', address -%}
+          <button type="submit" name="_method" value="delete" class="btn btn--outline btn--sm">Verwijderen</button>
+        {%- endform -%}
+      </div>
+    {%- endfor -%}
+    <a href="{{ routes.account_url }}" class="link">Terug naar account</a>
+  </div>
+</section>

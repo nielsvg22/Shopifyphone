@@ -1,0 +1,154 @@
+{%- liquid
+  assign p = product
+  assign device_model = p.metafields.custom.device_model.value
+  assign storage = p.metafields.custom.storage.value
+  assign color = p.metafields.custom.color.value
+  assign condition = p.metafields.custom.condition.value
+  assign battery = p.metafields.custom.battery_health.value
+  assign warranty = p.metafields.custom.warranty.value
+  assign compare_price = p.selected_or_first_available_variant.compare_at_price
+  assign current_price = p.selected_or_first_available_variant.price
+-%}
+<section class="main-product">
+  <div class="container main-product__grid">
+    <div class="main-product__gallery" data-gallery>
+      <div class="main-product__main-image">
+        {%- for image in p.images -%}
+          <img
+            src="{{ image | image_url: width: 1200 }}"
+            alt="{{ image.alt | escape }}"
+            width="{{ image.width }}" height="{{ image.height }}"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            class="{% unless forloop.first %}is-hidden{% endunless %}"
+            data-gallery-image="{{ forloop.index0 }}">
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'main-product__placeholder' }}
+        {%- endfor -%}
+      </div>
+      {%- if p.images.size > 1 -%}
+        <div class="main-product__thumbs">
+          {%- for image in p.images -%}
+            <button type="button" class="main-product__thumb {% if forloop.first %}is-active{% endif %}" data-gallery-thumb="{{ forloop.index0 }}">
+              <img src="{{ image | image_url: width: 160 }}" alt="{{ image.alt | escape }}" width="80" height="80" loading="lazy">
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="main-product__info">
+      {%- if device_model != blank -%}<p class="main-product__model">{{ device_model }}</p>{%- endif -%}
+      <h1>{{ p.title }}</h1>
+
+      <div class="main-product__price">
+        <span class="price price--lg">{{ current_price | money }}</span>
+        {%- if compare_price > current_price -%}
+          <span class="price price--compare">{{ compare_price | money }}</span>
+        {%- endif -%}
+      </div>
+
+      <p class="main-product__stock {% if p.available %}in-stock{% else %}out-of-stock{% endif %}">
+        {%- if p.available -%}{% render 'icon', name: 'check' %} Op voorraad, snel verzonden{%- else -%}Uitverkocht{%- endif -%}
+      </p>
+
+      <dl class="main-product__specs">
+        {%- if storage != blank -%}<div><dt>Opslag</dt><dd>{{ storage }}</dd></div>{%- endif -%}
+        {%- if color != blank -%}<div><dt>Kleur</dt><dd>{{ color }}</dd></div>{%- endif -%}
+        {%- if condition != blank -%}<div><dt>Conditie</dt><dd>{{ condition }}</dd></div>{%- endif -%}
+        {%- if battery != blank -%}<div><dt>Batterij</dt><dd>{{ battery }}%</dd></div>{%- endif -%}
+        {%- if warranty != blank -%}<div><dt>Garantie</dt><dd>{{ warranty }}</dd></div>{%- endif -%}
+      </dl>
+
+      {% form 'product', p, class: 'main-product__form', id: 'product-form' %}
+        {%- if p.variants.size > 1 -%}
+          {%- for option in p.options_with_values -%}
+            <div class="variant-option">
+              <label>{{ option.name }}</label>
+              <select name="option-{{ forloop.index0 }}" data-option-index="{{ forloop.index0 }}">
+                {%- for value in option.values -%}
+                  <option value="{{ value | escape }}">{{ value }}</option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- endfor -%}
+          <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}" data-variant-id>
+        {%- else -%}
+          <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
+        {%- endif -%}
+
+        <div class="main-product__quantity">
+          <label for="quantity">Aantal</label>
+          <input type="number" id="quantity" name="quantity" value="1" min="1">
+        </div>
+
+        <button type="submit" class="btn btn--cta btn--lg btn--full" {% unless p.available %}disabled{% endunless %}>
+          {%- if p.available -%}In winkelwagen{%- else -%}Uitverkocht{%- endif -%}
+        </button>
+      {% endform %}
+
+      <ul class="main-product__trust">
+        <li>{% render 'icon', name: 'truck' %} Voor 17:00 besteld, morgen in huis</li>
+        <li>{% render 'icon', name: 'shield' %} 30 dagen bedenktijd</li>
+        <li>{% render 'icon', name: 'camera' %} Echte foto's van dit exemplaar</li>
+      </ul>
+
+      <div class="accordion">
+        {%- if p.description != blank -%}
+          <details open>
+            <summary>Productomschrijving</summary>
+            <div class="rte">{{ p.description }}</div>
+          </details>
+        {%- endif -%}
+        {%- if condition != blank -%}
+          <details>
+            <summary>Conditie & cosmetische staat</summary>
+            <div class="rte"><p>{{ condition }}</p></div>
+          </details>
+        {%- endif -%}
+        {%- if battery != blank -%}
+          <details>
+            <summary>Batterij</summary>
+            <div class="rte"><p>Gemeten batterijcapaciteit: {{ battery }}%.</p></div>
+          </details>
+        {%- endif -%}
+        <details>
+          <summary>Verzending</summary>
+          <div class="rte"><p>{{ section.settings.shipping_text }}</p></div>
+        </details>
+        <details>
+          <summary>Garantie & retour</summary>
+          <div class="rte"><p>{{ section.settings.warranty_text }}</p></div>
+        </details>
+        {%- if section.settings.faq_text != blank -%}
+        <details>
+          <summary>Veelgestelde vragen</summary>
+          <div class="rte">{{ section.settings.faq_text }}</div>
+        </details>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sticky-atc" data-sticky-atc hidden>
+  <div class="container sticky-atc__inner">
+    <div>
+      <strong>{{ p.title }}</strong>
+      <span class="price">{{ current_price | money }}</span>
+    </div>
+    <button type="submit" form="product-form" class="btn btn--cta" {% unless p.available %}disabled{% endunless %}>
+      {%- if p.available -%}In winkelwagen{%- else -%}Uitverkocht{%- endif -%}
+    </button>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Productinformatie",
+  "settings": [
+    { "type": "richtext", "id": "shipping_text", "label": "Verzendtekst", "default": "<p>Voor 17:00 bestelde toestellen worden dezelfde dag verzonden. Verzending via PostNL met track & trace.</p>" },
+    { "type": "richtext", "id": "warranty_text", "label": "Garantie & retourtekst", "default": "<p>30 dagen bedenktijd en minimaal 6 maanden garantie op elk toestel.</p>" },
+    { "type": "richtext", "id": "faq_text", "label": "FAQ-tekst (optioneel)" }
+  ]
+}
+{% endschema %}

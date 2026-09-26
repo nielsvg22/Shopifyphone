@@ -1,0 +1,13 @@
+<section class="main-page main-page--narrow">
+  <div class="container">
+    <h1>Account activeren</h1>
+    {% form 'activate_customer_password' %}
+      {%- if form.errors -%}<p class="form-error">{{ form.errors | default_errors }}</p>{%- endif -%}
+      <label for="activate_password">Wachtwoord</label>
+      <input type="password" name="customer[password]" id="activate_password" autocomplete="new-password" required>
+      <label for="activate_password_confirmation">Bevestig wachtwoord</label>
+      <input type="password" name="customer[password_confirmation]" id="activate_password_confirmation" autocomplete="new-password" required>
+      <button type="submit" class="btn btn--cta btn--full">Account activeren</button>
+    {% endform %}
+  </div>
+</section>

@@ -1,0 +1,6 @@
+.shopifyignore
+.theme-check.yml.bak
+node_modules/
+.env
+.DS_Store
+*.log

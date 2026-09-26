@@ -1,0 +1,28 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Getagd \"{{ tags }}\"",
+      "page": "Pagina {{ page }}"
+    },
+    "accessibility": {
+      "skip_to_content": "Ga naar inhoud"
+    }
+  },
+  "newsletter": {
+    "success": "Bedankt voor je inschrijving!"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "In winkelwagen",
+      "sold_out": "Uitverkocht",
+      "on_sale": "Aanbieding"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Winkelwagen",
+      "empty": "Je winkelwagen is leeg.",
+      "checkout": "Naar checkout"
+    }
+  }
+}

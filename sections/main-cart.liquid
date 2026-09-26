@@ -1,0 +1,65 @@
+<section class="main-cart">
+  <div class="container">
+    <h1>Winkelwagen</h1>
+
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" id="cart-form">
+        <div class="cart-layout">
+          <table class="cart-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Prijs</th>
+                <th>Aantal</th>
+                <th>Totaal</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for item in cart.items -%}
+                <tr class="cart-table__row">
+                  <td class="cart-table__product">
+                    <a href="{{ item.url }}" class="cart-table__image">
+                      {%- if item.image -%}
+                        <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.image.alt | escape }}" width="100" height="100" loading="lazy">
+                      {%- endif -%}
+                    </a>
+                    <div>
+                      <a href="{{ item.url }}" class="cart-table__title">{{ item.product.title }}</a>
+                      {%- unless item.variant.title == 'Default Title' -%}
+                        <p class="cart-table__variant">{{ item.variant.title }}</p>
+                      {%- endunless -%}
+                    </div>
+                  </td>
+                  <td>{{ item.original_price | money }}</td>
+                  <td>
+                    <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-cart-qty data-line="{{ forloop.index }}">
+                  </td>
+                  <td>{{ item.final_line_price | money }}</td>
+                  <td><a href="{{ item.url_to_remove }}" class="cart-table__remove" aria-label="Verwijderen">{% render 'icon', name: 'close' %}</a></td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+
+          <div class="cart-summary">
+            <div class="cart-summary__row cart-summary__row--total">
+              <span>Subtotaal</span>
+              <span>{{ cart.total_price | money }}</span>
+            </div>
+            <p class="cart-summary__note">Verzendkosten en belastingen worden berekend bij checkout.</p>
+            <button type="submit" name="checkout" class="btn btn--cta btn--lg btn--full">Naar checkout</button>
+            <a href="{{ routes.all_products_collection_url }}" class="cart-summary__continue">Verder winkelen</a>
+          </div>
+        </div>
+      </form>
+    {%- else -%}
+      <p class="empty-state">Je winkelwagen is leeg.</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--cta">Bekijk de voorraad</a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Winkelwagen" }
+{% endschema %}

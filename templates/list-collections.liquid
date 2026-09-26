@@ -1,0 +1,15 @@
+<section class="main-page">
+  <div class="container">
+    <h1>Collecties</h1>
+    <div class="category-grid__grid">
+      {%- for collection in collections -%}
+        <a href="{{ collection.url }}" class="category-card">
+          {%- if collection.featured_image -%}
+            <img src="{{ collection.featured_image | image_url: width: 700 }}" alt="{{ collection.title }}" width="350" height="350" loading="lazy">
+          {%- endif -%}
+          <span class="category-card__title">{{ collection.title }}</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,19 @@
+<section class="main-page main-page--narrow">
+  <div class="container">
+    <h1>Account aanmaken</h1>
+    {% form 'create_customer' %}
+      {%- if form.errors -%}
+        <p class="form-error">{{ form.errors | default_errors }}</p>
+      {%- endif -%}
+      <label for="first_name">Voornaam</label>
+      <input type="text" name="customer[first_name]" id="first_name" autocomplete="given-name">
+      <label for="last_name">Achternaam</label>
+      <input type="text" name="customer[last_name]" id="last_name" autocomplete="family-name">
+      <label for="email">E-mailadres</label>
+      <input type="email" name="customer[email]" id="email" autocomplete="email" required>
+      <label for="create_customer_password">Wachtwoord</label>
+      <input type="password" name="customer[password]" id="create_customer_password" autocomplete="new-password" required>
+      <button type="submit" class="btn btn--cta btn--full">Account aanmaken</button>
+    {% endform %}
+  </div>
+</section>

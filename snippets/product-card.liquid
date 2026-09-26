@@ -1,0 +1,63 @@
+{%- comment -%} Usage: {% render 'product-card', product: product %} {%- endcomment -%}
+{%- liquid
+  assign p = product
+  assign featured_image = p.featured_image | default: p.images.first
+  assign device_model = p.metafields.custom.device_model.value
+  assign storage = p.metafields.custom.storage.value
+  assign color = p.metafields.custom.color.value
+  assign condition = p.metafields.custom.condition.value
+  assign battery = p.metafields.custom.battery_health.value
+  assign warranty = p.metafields.custom.warranty.value
+  assign compare_price = p.compare_at_price
+-%}
+<div class="product-card">
+  <a href="{{ p.url }}" class="product-card__image-wrap">
+    {%- if featured_image -%}
+      <img
+        src="{{ featured_image | image_url: width: 600 }}"
+        srcset="{{ featured_image | image_url: width: 300 }} 300w, {{ featured_image | image_url: width: 600 }} 600w"
+        sizes="(min-width: 990px) 25vw, (min-width: 600px) 50vw, 100vw"
+        alt="{{ featured_image.alt | escape }}"
+        width="{{ featured_image.width }}" height="{{ featured_image.height }}"
+        loading="lazy">
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
+    {%- endif -%}
+    {%- if compare_price > p.price -%}
+      {%- assign discount = compare_price | minus: p.price | times: 100 | divided_by: compare_price -%}
+      <span class="badge badge--sale">-{{ discount }}%</span>
+    {%- endif -%}
+    {%- unless p.available -%}
+      <span class="badge badge--soldout">Uitverkocht</span>
+    {%- endunless -%}
+  </a>
+
+  <div class="product-card__body">
+    {%- if device_model != blank -%}<p class="product-card__model">{{ device_model }}</p>{%- endif -%}
+    <h3 class="product-card__title"><a href="{{ p.url }}">{{ p.title }}</a></h3>
+
+    <ul class="product-card__specs">
+      {%- if storage != blank -%}<li>{{ storage }}</li>{%- endif -%}
+      {%- if color != blank -%}<li>{{ color }}</li>{%- endif -%}
+      {%- if condition != blank -%}<li>{{ condition }}</li>{%- endif -%}
+      {%- if battery != blank -%}<li>{{ battery }}% batterij</li>{%- endif -%}
+    </ul>
+
+    <div class="product-card__price">
+      <span class="price">{{ p.price | money }}</span>
+      {%- if compare_price > p.price -%}
+        <span class="price price--compare">{{ compare_price | money }}</span>
+      {%- endif -%}
+    </div>
+
+    {%- if warranty != blank -%}
+      <p class="product-card__warranty">{% render 'icon', name: 'shield' %} {{ warranty }}</p>
+    {%- endif -%}
+
+    <p class="product-card__stock {% if p.available %}in-stock{% else %}out-of-stock{% endif %}">
+      {%- if p.available -%}Op voorraad{%- else -%}Uitverkocht{%- endif -%}
+    </p>
+
+    <a href="{{ p.url }}" class="btn btn--outline btn--full">Bekijk toestel</a>
+  </div>
+</div>

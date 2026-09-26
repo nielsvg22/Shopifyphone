@@ -1,0 +1,19 @@
+<section class="main-page main-page--narrow">
+  <div class="container">
+    <h1>Inloggen</h1>
+    {% form 'customer_login' %}
+      {%- if form.errors -%}
+        <p class="form-error">{{ form.errors | default_errors }}</p>
+      {%- endif -%}
+      <label for="customer_email">E-mailadres</label>
+      <input type="email" name="customer[email]" id="customer_email" autocomplete="email" required>
+      {%- if form.password_needed -%}
+        <label for="customer_password">Wachtwoord</label>
+        <input type="password" name="customer[password]" id="customer_password" autocomplete="current-password" required>
+      {%- endif -%}
+      <button type="submit" class="btn btn--cta btn--full">Inloggen</button>
+      <a href="{{ routes.account_recover_url }}" class="link">Wachtwoord vergeten?</a>
+    {% endform %}
+    <p>Nog geen account? <a href="{{ routes.account_register_url }}">Registreer hier</a></p>
+  </div>
+</section>

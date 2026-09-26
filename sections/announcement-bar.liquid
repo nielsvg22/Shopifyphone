@@ -1,0 +1,21 @@
+{%- if section.settings.message != blank -%}
+<div class="announcement-bar">
+  <div class="container">
+    {%- if section.settings.link != blank -%}
+      <a href="{{ section.settings.link }}">{{ section.settings.message }}</a>
+    {%- else -%}
+      <span>{{ section.settings.message }}</span>
+    {%- endif -%}
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    { "type": "text", "id": "message", "label": "Tekst", "default": "Gratis verzending vanaf €50" },
+    { "type": "url", "id": "link", "label": "Link (optioneel)" }
+  ]
+}
+{% endschema %}

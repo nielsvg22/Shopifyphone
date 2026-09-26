@@ -1,0 +1,7 @@
+<section class="main-page">
+  <div class="container">
+    <h1>{{ article.title }}</h1>
+    <p class="collection-header__count">{{ article.published_at | date: '%d-%m-%Y' }}</p>
+    <div class="rte">{{ article.content }}</div>
+  </div>
+</section>

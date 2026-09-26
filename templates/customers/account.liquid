@@ -1,0 +1,27 @@
+<section class="main-page">
+  <div class="container">
+    <h1>Mijn account</h1>
+    <p>Welkom, {{ customer.first_name }}.</p>
+    <a href="{{ routes.account_logout_url }}" class="btn btn--outline">Uitloggen</a>
+    <h2>Bestellingen</h2>
+    {%- if customer.orders.size > 0 -%}
+      <table class="cart-table">
+        <thead><tr><th>Order</th><th>Datum</th><th>Status</th><th>Totaal</th></tr></thead>
+        <tbody>
+        {%- for order in customer.orders -%}
+          <tr>
+            <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+            <td>{{ order.created_at | date: '%d-%m-%Y' }}</td>
+            <td>{{ order.financial_status_label }}</td>
+            <td>{{ order.total_price | money }}</td>
+          </tr>
+        {%- endfor -%}
+        </tbody>
+      </table>
+    {%- else -%}
+      <p>Je hebt nog geen bestellingen.</p>
+    {%- endif -%}
+    <h2>Adressen</h2>
+    <a href="{{ routes.account_addresses_url }}" class="link">Adressen beheren</a>
+  </div>
+</section>

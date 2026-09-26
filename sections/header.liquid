@@ -1,0 +1,108 @@
+{%- liquid
+  assign menu = linklists[section.settings.menu]
+-%}
+<header class="site-header{% if section.settings.sticky %} site-header--sticky{% endif %}" data-header>
+  <div class="container site-header__inner">
+    <button class="site-header__hamburger" data-menu-toggle aria-label="Menu" aria-expanded="false">
+      {% render 'icon', name: 'menu' %}
+    </button>
+
+    <a href="{{ routes.root_url }}" class="site-header__logo">
+      {%- if settings.logo -%}
+        <img src="{{ settings.logo | image_url: width: 320 }}" alt="{{ shop.name }}" width="160" height="{{ 160 | divided_by: settings.logo.aspect_ratio }}" loading="eager">
+      {%- else -%}
+        <span class="site-header__logo-text">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    {%- if menu -%}
+    <nav class="site-header__nav" aria-label="Hoofdmenu">
+      <ul>
+        {%- for link in menu.links -%}
+          <li class="{% if link.links != blank %}has-dropdown{% endif %}">
+            <a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>
+            {%- if link.links != blank -%}
+              <ul class="dropdown">
+                {%- for child in link.links -%}
+                  <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+    {%- endif -%}
+
+    <div class="site-header__actions">
+      <button class="site-header__icon-btn" data-search-toggle aria-label="Zoeken" aria-expanded="false">
+        {% render 'icon', name: 'search' %}
+      </button>
+      <a href="{{ routes.account_url }}" class="site-header__icon-btn" aria-label="Account">
+        {% render 'icon', name: 'account' %}
+      </a>
+      <a href="{{ routes.cart_url }}" class="site-header__icon-btn site-header__cart" aria-label="Winkelwagen">
+        {% render 'icon', name: 'cart' %}
+        <span class="site-header__cart-count" data-cart-count>{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-header__search" data-search-panel hidden>
+    <div class="container">
+      <form action="{{ routes.search_url }}" method="get" role="search">
+        <input type="search" name="q" placeholder="Zoek op model, bv. iPhone 13 Pro" value="{{ search.terms | escape }}" aria-label="Zoeken">
+        <input type="hidden" name="type" value="product">
+        <button type="submit">{% render 'icon', name: 'search' %}</button>
+        <button type="button" data-search-close aria-label="Sluiten">{% render 'icon', name: 'close' %}</button>
+      </form>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-nav" data-mobile-nav hidden>
+  <div class="mobile-nav__header">
+    <span class="site-header__logo-text">{{ shop.name }}</span>
+    <button data-menu-close aria-label="Sluiten">{% render 'icon', name: 'close' %}</button>
+  </div>
+  {%- if menu -%}
+  <nav aria-label="Mobiel menu">
+    <ul>
+      {%- for link in menu.links -%}
+        <li>
+          <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- if link.links != blank -%}
+            <ul class="mobile-nav__sub">
+              {%- for child in link.links -%}
+                <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+      <li><a href="{{ routes.account_url }}">Account</a></li>
+    </ul>
+  </nav>
+  {%- endif -%}
+</div>
+<div class="mobile-nav__backdrop" data-menu-backdrop hidden></div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Sticky header",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

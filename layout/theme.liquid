@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_navy }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif -%}
+      {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {{ content_for_header }}
+
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    <style>
+      :root{
+        --color-navy: {{ settings.color_navy | default: '#0a1f44' }};
+        --color-navy-dark: {{ settings.color_navy_dark | default: '#061530' }};
+        --color-cta: {{ settings.color_cta | default: '#1a9c52' }};
+        --color-cta-dark: {{ settings.color_cta_dark | default: '#137d41' }};
+        --color-text: {{ settings.color_text | default: '#1c1c1c' }};
+        --color-muted: {{ settings.color_muted | default: '#6b7280' }};
+        --color-border: {{ settings.color_border | default: '#e5e7eb' }};
+        --color-bg: {{ settings.color_bg | default: '#ffffff' }};
+        --container-width: {{ settings.container_width | default: 1280 }}px;
+        --font-body: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+        --font-heading: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+      }
+    </style>
+    {{ settings.type_body_font | font_face: font_display: 'swap' }}
+    {{ settings.type_heading_font | font_face: font_display: 'swap' }}
+
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  </head>
+
+  <body class="template-{{ request.page_type | handle }}">
+    <a class="skip-to-content" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" class="content-for-layout">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    <script>document.documentElement.classList.remove('no-js');</script>
+  </body>
+</html>

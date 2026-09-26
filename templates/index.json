@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "hero": { "type": "hero" },
+    "usp": { "type": "usp-bar" },
+    "featured": {
+      "type": "featured-collection",
+      "settings": { "heading": "Nieuw binnen" }
+    },
+    "categories": { "type": "category-grid" },
+    "reviews": { "type": "reviews" },
+    "why-us": { "type": "why-us" }
+  },
+  "order": ["hero", "usp", "featured", "categories", "reviews", "why-us"]
+}

@@ -1,0 +1,15 @@
+<section class="main-page main-page--narrow">
+  <div class="container">
+    <h1>Wachtwoord vergeten</h1>
+    {% form 'recover_customer_password' %}
+      {%- if form.errors -%}<p class="form-error">{{ form.errors | default_errors }}</p>{%- endif -%}
+      {%- if form.posted_successfully? -%}
+        <p>Als er een account bestaat met dit e-mailadres, ontvang je een e-mail om je wachtwoord te herstellen.</p>
+      {%- else -%}
+        <label for="recover_email">E-mailadres</label>
+        <input type="email" name="email" id="recover_email" autocomplete="email" required>
+        <button type="submit" class="btn btn--cta btn--full">Verstuur herstellink</button>
+      {%- endif -%}
+    {% endform %}
+  </div>
+</section>

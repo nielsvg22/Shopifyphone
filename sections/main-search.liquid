@@ -1,0 +1,29 @@
+<section class="main-search">
+  <div class="container">
+    <h1>Zoekresultaten</h1>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Zoek op model" aria-label="Zoeken">
+      <input type="hidden" name="type" value="product">
+      <button type="submit">{% render 'icon', name: 'search' %}</button>
+    </form>
+
+    {%- if search.performed -%}
+      <p class="collection-header__count">{{ search.results_count }} resultaten voor "{{ search.terms }}"</p>
+      {%- if search.results.size > 0 -%}
+        <div class="product-grid product-grid--4">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {% render 'product-card', product: item %}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="empty-state">Geen resultaten gevonden.</p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Zoekresultaten" }
+{% endschema %}
